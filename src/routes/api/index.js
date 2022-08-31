@@ -1,10 +1,10 @@
 const { Router } = require("express");
 
-const {getAllBooks, getBookAggregates} = require("../../controllers/api/books")
+
+const books =  require("./books");
 
 const router = Router();
 
-router.use("/books", getAllBooks);
-router.use("/books-aggregates", getBookAggregates);
+router.use("/books", books);
 
 module.exports = router;

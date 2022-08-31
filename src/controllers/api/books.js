@@ -1,18 +1,21 @@
 const { Book } = require("../../models");
 
-const getAllBooks = async (req, res) => {
+const getAll = async (req, res) => {
   try {
     const data = await Book.find({});
     return res.status(200).json({ data });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get all books | ${error.message}`);
-    return res.status(500).json({ error: "Failed to get all books" });
+    console.log(`[ERROR]: Failed to get all Books | ${error.message}`);
+    return res.status(500).json({ error: "Failed to get all Books" });
   }
 };
 
-const getBookAggregates = async (req, res) => {
+const getAllAggregate = async (req, res) => {
   try {
     const data = await Book.aggregate([
+      {
+        $match: { inStock: true },
+      },
       {
         $group: {
           _id: null,
@@ -25,9 +28,9 @@ const getBookAggregates = async (req, res) => {
     ]);
     return res.status(200).json({ data });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get books aggregates | ${error.message}`);
-    return res.status(500).json({ error: "Failed to get books aggregates" });
+    console.log(`[ERROR]: Failed to get Books aggregates | ${error.message}`);
+    return res.status(500).json({ error: "Failed to get Books aggregates" });
   }
 };
 
-module.exports = { getAllBooks, getBookAggregates };
+module.exports = { getAll, getAllAggregate };
